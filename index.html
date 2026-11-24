@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8e5f5">
+<title>Meri Jaaaaan | A Birthday Universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --pink:#f28cbd;--pink2:#ffd4e9;--purple:#a78bfa;
+ --purple2:#e9ddff;--blue:#c7eaff;--ink:#563d6b;
+ --muted:#927e9e;--glass:rgba(255,255,255,.72);
+ --shadow:0 18px 55px rgba(129,83,150,.12);
+}
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;color:var(--ink);
+ font-family:"DM Sans",sans-serif;overflow-x:hidden;
+ background:
+ radial-gradient(ellipse at 5% 5%,#ffe0ef 0,transparent 35%),
+ radial-gradient(ellipse at 95% 15%,#e3d8ff 0,transparent 36%),
+ radial-gradient(ellipse at 50% 100%,#dff4ff 0,transparent 45%),
+ #fff9fd;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+#ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.floaty{position:absolute;bottom:-50px;opacity:.55;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.layout{position:relative;z-index:1;min-height:100vh}
+.sidebar{
+ position:fixed;z-index:20;inset:0 auto 0 0;width:258px;
+ display:flex;flex-direction:column;padding:22px 14px;
+ background:rgba(255,255,255,.72);backdrop-filter:blur(25px);
+ border-right:1px solid #fff;box-shadow:10px 0 40px #9d70ad12;
+}
+.logo{padding:8px 12px 20px;font:800 25px "Playfair Display",serif;
+ background:linear-gradient(100deg,#ec79b5,#8d76df);
+ color:transparent;background-clip:text}
+.logo small{display:block;margin-top:5px;font:700 9px "DM Sans";
+ letter-spacing:2.2px;color:#a78fae}
+.nav{overflow:auto;display:grid;gap:4px;scrollbar-width:thin}
+.nav button{
+ display:flex;align-items:center;gap:11px;text-align:left;
+ border:0;background:transparent;color:#806b91;border-radius:13px;
+ padding:9px 11px;font-size:12px;transition:.25s;
+}
+.nav button:hover,.nav button.active{
+ color:#724c96;background:linear-gradient(100deg,#ffe1ef,#e9e1ff);
+ transform:translateX(3px)
+}
+.nav .ico{width:22px;text-align:center;font-size:16px}
+.side-foot{margin-top:auto;padding:14px 8px 0;color:#ad98b5;font-size:10px}
+main{margin-left:258px;padding:25px clamp(15px,4vw,54px) 65px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.tag{border:1px solid white;background:#ffffffa6;border-radius:30px;
+ padding:9px 14px;font-size:11px;color:#967ba5}
+.music-button,.primary{
+ border:0;color:white;background:linear-gradient(105deg,#ed83b8,#9c83ed);
+ border-radius:14px;padding:12px 18px;font-weight:800;
+ box-shadow:0 9px 23px #b984d744;transition:.25s
+}
+.music-button{border-radius:30px;padding:10px 16px}
+.primary:hover,.music-button:hover{transform:translateY(-3px);filter:brightness(1.04)}
+.secondary,.soft{
+ border:1px solid #f0d9ee;background:#fff9;color:#916da5;
+ border-radius:13px;padding:11px 16px;font-weight:700;transition:.2s
+}
+.secondary:hover,.soft:hover{transform:translateY(-2px);background:#fff}
+.hero{
+ min-height:345px;border:1px solid #fff;border-radius:30px;
+ padding:clamp(25px,5vw,55px);position:relative;overflow:hidden;
+ display:flex;align-items:center;
+ background:linear-gradient(115deg,#ffdfedeb,#e8ddffeb 58%,#dff3ffeb);
+ box-shadow:var(--shadow)
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero:before{width:280px;height:280px;right:3%;top:-115px;background:#ffffff8c;filter:blur(2px)}
+.hero:after{width:190px;height:190px;right:24%;bottom:-115px;background:#f7b8df88}
+.hero-copy{position:relative;z-index:2;max-width:600px}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:3px;color:#ad73a3}
+h1{font:clamp(39px,6vw,72px)/1.05 "Playfair Display",serif;color:#78548f;margin:15px 0}
+.grad{background:linear-gradient(90deg,#ed72ac,#8d73df);color:transparent;background-clip:text}
+.hero p{max-width:510px;color:#896f9a;line-height:1.8;font-size:14px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.hero-art{position:absolute;right:8%;font-size:clamp(85px,13vw,170px);
+ filter:drop-shadow(0 18px 20px #986b9c44);animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-15px) rotate(5deg)}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:17px 0 28px}
+.stat,.panel,.tile{
+ border:1px solid #fff;background:var(--glass);
+ backdrop-filter:blur(17px);box-shadow:var(--shadow);border-radius:21px
+}
+.stat{padding:16px 19px}.stat b{display:block;font-size:22px;color:#956bb3}
+.stat small{font-size:11px;color:#a08da9}
+.heading{margin:26px 0 14px}
+.heading h2{font:30px "Playfair Display",serif;margin:0 0 6px;color:#79578f}
+.heading p{font-size:12px;color:#a08da9;margin:0}
+.panel{padding:clamp(18px,3vw,30px);min-height:235px;animation:appear .4s ease}
+@keyframes appear{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:13px}
+.tile{padding:18px;cursor:pointer;transition:.28s}
+.tile:hover{transform:translateY(-5px);box-shadow:0 20px 40px #a47bbd30}
+.tile .emoji{font-size:29px}.tile h3{font-size:14px;margin:9px 0 5px}
+.tile p{font-size:11px;line-height:1.6;color:#9a86a5;margin:0}
+.center{text-align:center}
+.big{font-size:76px;margin:10px}
+.controls{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:17px 0}
+.result{margin:16px auto 0;max-width:680px;padding:13px 16px;
+ border-radius:14px;background:#fff9;color:#88699b;font-size:13px;line-height:1.7;min-height:44px}
+.field{width:min(100%,390px);padding:12px 14px;border-radius:13px;
+ border:1px solid #ead8ef;background:#fff9;color:#634c78;outline:none;margin:5px}
+textarea.field{min-height:90px;resize:vertical}
+.field:focus{border-color:#d39bd0;box-shadow:0 0 0 3px #f4d8ef}
+.letter{max-width:680px;margin:auto;text-align:left;white-space:pre-line;
+ font:16px/2 "Playfair Display",serif;color:#785c91}
+.cake{font-size:100px;display:inline-block;cursor:pointer;transition:.5s}
+.cake.off{transform:scale(.85) rotate(-7deg);filter:grayscale(.6)}
+.balloons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin:20px}
+.balloon{font-size:48px;cursor:pointer;animation:float 2.6s infinite;transition:.2s}
+.balloon:hover{transform:scale(1.2)}
+.wheel{width:220px;height:220px;margin:20px auto;border-radius:50%;
+ border:8px solid white;background:conic-gradient(#ff9bc9 0 45deg,#c5aaff 45deg 90deg,#9edfff 90deg 135deg,#ffe09f 135deg 180deg,#ff9bc9 180deg 225deg,#c5aaff 225deg 270deg,#9edfff 270deg 315deg,#ffe09f 315deg);
+ box-shadow:0 12px 30px #a37db544;transition:transform 4s cubic-bezier(.12,.8,.15,1)}
+.memory-grid{display:grid;grid-template-columns:repeat(4,65px);gap:8px;justify-content:center;margin:20px}
+.memory-grid button,.tic-grid button{border:0;border-radius:12px;background:linear-gradient(135deg,#f7d8eb,#e2d9ff);font-size:25px}
+.memory-grid button{height:65px}
+.door{font-size:95px;display:inline-block;cursor:pointer;transition:.7s}
+.door.open{transform:perspective(400px) rotateY(-65deg)}
+.tic-grid{display:grid;grid-template-columns:repeat(3,72px);gap:7px;justify-content:center}
+.tic-grid button{height:72px}
+.scratch{max-width:360px;height:125px;margin:20px auto;border-radius:18px;
+ background:linear-gradient(110deg,#f4a9d0,#b9a6f3);display:grid;place-items:center;
+ color:white;font-size:19px;font-weight:800;cursor:pointer;box-shadow:inset 0 0 0 5px #fff8}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:15px}
+.photo-grid img{width:100%;height:150px;object-fit:cover;border-radius:14px;border:3px solid white}
+#fireCanvas{position:fixed;inset:0;z-index:100;pointer-events:none}
+#musicDock{position:fixed;right:15px;bottom:15px;z-index:30;display:none;
+ padding:8px;background:#fff;border:1px solid #fff;border-radius:17px;
+ box-shadow:0 10px 35px #76508c33}
+#musicDock iframe{display:block;width:240px;height:135px;border:0;border-radius:10px}
+#musicDock button{margin-top:5px}
+footer{text-align:center;color:#ae99b6;font-size:11px;padding:30px 5px}
+a{color:#926fba}
+@media(max-width:800px){
+ .sidebar{width:76px;padding:16px 7px}
+ .logo{font-size:0;padding:9px 0 17px;text-align:center}
+ .logo:before{content:"💗";font-size:25px}
+ .logo small{display:none}
+ .nav button{justify-content:center;padding:11px 4px;font-size:0}
+ .nav .ico{font-size:17px}
+ .nav .nav-name{display:none}
+ .side-foot{font-size:0}.side-foot:after{content:"✨";font-size:18px}
+ main{margin-left:76px;padding:17px 12px 45px}
+ .hero-art{opacity:.35;right:2%}
+}
+@media(max-width:480px){
+ .tag{display:none}.hero{min-height:365px}
+ .stats{gap:7px}.stat{padding:12px}.stat b{font-size:17px}
+ .stats .stat:last-child{display:none}
+ #musicDock iframe{width:190px;height:107px}
+}
+</style>
+</head>
+<body>
+<div id="ambient"></div>
+<canvas id="fireCanvas"></canvas>
+<div id="musicDock"></div>
+
+<div class="layout">
+<aside class="sidebar">
+ <div class="logo">Meri Jaaaaan<small>YOUR LITTLE DREAM WORLD</small></div>
+ <nav class="nav" id="nav"></nav>
+ <div class="side-foot">Made with love ✦ just for you</div>
+</aside>
+
+<main>
+ <div class="topbar">
+  <div class="tag">✦ A little universe made with care</div>
+  <button class="music-button" onclick="toggleMusic()">♫ <span id="musicLabel">Play music</span></button>
+ </div>
+
+ <section class="hero" id="hero">
+  <div class="hero-copy">
+   <div class="eyebrow">A SPECIAL DAY • A SPECIAL PERSON</div>
+   <h1>Happy Birthday,<br><span class="grad">Meri Jaaaaan ✨</span></h1>
+   <p>Welcome to a tiny universe of memories, surprises, birthday wishes and little moments made to bring a smile to your face.</p>
+   <div class="hero-actions">
+    <button class="primary" onclick="enterExperience()">💗 Enter the surprise</button>
+    <button class="secondary" onclick="showPage(1)">Read your letter</button>
+   </div>
+  </div>
+  <div class="hero-art">🎀</div>
+ </section>
+
+ <div class="stats">
+  <div class="stat"><b>40 ✨</b><small>Birthday experiences</small></div>
+  <div class="stat"><b>∞ 💗</b><small>Reasons to smile</small></div>
+  <div class="stat"><b>100%</b><small>Made with care</small></div>
+ </div>
+
+ <div class="heading">
+  <h2 id="pageTitle">Your surprise world</h2>
+  <p id="pageDesc">Choose a little door and discover something lovely.</p>
+ </div>
+ <section class="panel" id="content"></section>
+ <footer>Made with ✨ and lots of birthday wishes · Meri Jaaaaan</footer>
+</main>
+</div>
+
+<audio id="fireAudio" preload="none" src="https://sfxmint.com/dl/fireworks-06.mp3"></audio>
+
+<script>
+"use strict";
+
+const sections=[
+["🏡","Home","Your birthday universe"],
+["💌","Birthday Letter","A little letter from the heart"],
+["🎂","Cake & Candles","Make a birthday wish"],
+["🏮","Wish Lantern","Send a wish into the sky"],
+["🎈","Balloon Pop","Pop the birthday balloons"],
+["💗","Heart Catcher","Catch floating hearts"],
+["🧩","Birthday Quiz","A little birthday quiz"],
+["🃏","Memory Match","Find the matching pairs"],
+["🎡","Lucky Wheel","Spin for a surprise"],
+["🎁","Gift Boxes","Choose a mystery gift"],
+["🚪","Mystery Door","Open the secret door"],
+["🗝️","Treasure Hunt","Find the hidden treasure"],
+["✨","Scratch Reveal","Reveal a hidden message"],
+["🎆","Fireworks","Light up the night sky"],
+["🌷","Birthday Wishes","A collection of wishes"],
+["🌟","Compliments","Little things worth celebrating"],
+["📝","Secret Notes","Write a secret note"],
+["🫙","Memory Jar","Save a happy thought"],
+["📖","Timeline","A journey of little moments"],
+["🖼️","Photo Gallery","Your favourite pictures"],
+["📸","Photo Booth","Create a photo moment"],
+["💝","Card Creator","Make a birthday card"],
+["📔","Scrapbook","Decorate a scrapbook"],
+["🌈","Mood Matcher","Choose today's mood"],
+["❓","Riddle Room","Solve a little riddle"],
+["⭕","Tic Tac Toe","Play a little game"],
+["🎨","Color Studio","Make colourful art"],
+["🪄","Theme Gallery","Explore dreamy themes"],
+["⏳","Countdown","Count down to a special day"],
+["🎵","Music & Sounds","Play the birthday song"],
+["🤝","Promise Wall","A wall of kind promises"],
+["⭐","Star Wishes","Make a wish upon a star"],
+["🎊","Confetti Party","Start a confetti party"],
+["🧸","Teddy Workshop","Create a teddy surprise"],
+["🌸","Flower Garden","Grow a little garden"],
+["🍾","Message Bottle","A message in a bottle"],
+["🌙","Surprise Room","One more surprise"],
+["🏆","Birthday Challenge","Complete tiny challenges"],
+["😊","Happiness Meter","Check the happy vibes"],
+["💖","Final Surprise","The final birthday surprise"]
+];
+
+const nav=document.getElementById("nav");
+const content=document.getElementById("content");
+let currentPage=0;
+let heartScore=0,balloonScore=0,matches=0;
+let ticCells=Array(9).fill(""),ticTurn="X",ticFinished=false;
+let notes=[],jar=[],promises=[],timeline=[],scrapbook=[];
+let musicPlaying=false;
+
+sections.forEach((s,i)=>{
+ const b=document.createElement("button");
+ b.innerHTML=`<span class="ico">${s[0]}</span><span class="nav-name">${s[1]}</span>`;
+ b.onclick=()=>showPage(i);
+ nav.appendChild(b);
+});
+
+function safe(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function showPage(i){
+ currentPage=i;
+ document.querySelectorAll(".nav button").forEach((b,n)=>b.classList.toggle("active",n===i));
+ document.getElementById("pageTitle").textContent=sections[i][0]+" "+sections[i][1];
+ document.getElementById("pageDesc").textContent=sections[i][2];
+ document.getElementById("hero").style.display=i===0?"flex":"none";
+ content.innerHTML=pageHTML(i);
+ if(i===0)renderHome();
+ if(i===4)initBalloons();
+ if(i===7)initMemory();
+ if(i===25)initTic();
+ if(i===28)updateCountdown();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderHome(){
+ const g=document.getElementById("homeGrid");
+ if(!g)return;
+ g.innerHTML=sections.slice(1).map((s,n)=>`
+ <div class="tile" onclick="showPage(${n+1})">
+ <div class="emoji">${s[0]}</div><h3>${s[1]}</h3><p>${s[2]}</p></div>`).join("");
+}
+function pageHTML(i){
+ const pages={
+ 1:`<div class="center"><div class="big">💌</div><h2>A little letter for you</h2>
+ <div class="letter">Happy Birthday, Meri Jaaaaan! 💗
+
+Today is a special day to celebrate you. I hope your day is filled with beautiful memories, warm smiles, laughter and lovely surprises.
+
+May your next chapter bring new adventures, peaceful moments, exciting opportunities and countless reasons to smile. Keep dreaming, keep learning and keep being your wonderful self.
+
+I hope this little website makes your birthday feel extra special. You deserve kindness, happiness and all the beautiful things life can offer.
+
+Happy Birthday! 🌷</div></div>`,
+ 2:`<div class="center"><h2>Make a birthday wish</h2><div class="cake" id="cake" onclick="blowCake()">🎂</div>
+ <p>Tap the cake to blow out the candles.</p><div class="result" id="cakeResult">Your wish is waiting...</div></div>`,
+ 3:`<div class="center"><div class="big">🏮</div><h2>Wish Lantern</h2>
+ <input class="field" id="wishInput" placeholder="Write a little wish...">
+ <div class="controls"><button class="primary" onclick="releaseLantern()">Release lantern ✨</button></div>
+ <div class="result" id="lanternResult">Your wish is ready to float into the sky.</div></div>`,
+ 4:`<div class="center"><h2>Pop the balloons!</h2><p>Tap each balloon to pop it.</p>
+ <div class="balloons" id="balloons"></div><div class="result" id="balloonResult">Balloons popped: 0 / 12</div>
+ <button class="soft" onclick="initBalloons()">Reset balloons</button></div>`,
+ 5:`<div class="center"><h2>Heart Catcher 💗</h2><p>Tap the heart as many times as you can.</p>
+ <div class="big" id="heartTarget" style="cursor:pointer" onclick="catchHeart()">💗</div>
+ <div class="result" id="heartResult">Hearts caught: 0</div>
+ <button class="soft" onclick="heartScore=0;heartResult.textContent='Hearts caught: 0'">Reset</button></div>`,
+ 6:`<div class="center"><h2>Birthday Quiz</h2><p>Choose a birthday treat!</p>
+ <div class="controls"><button class="soft" onclick="quizAnswer('Cake')">🍰 Cake</button>
+ <button class="soft" onclick="quizAnswer('Ice cream')">🍦 Ice cream</button>
+ <button class="soft" onclick="quizAnswer('Chocolate')">🍫 Chocolate</button>
+ <button class="soft" onclick="quizAnswer('Strawberries')">🍓 Strawberries</button></div>
+ <div class="result" id="quizResult">No wrong answers here. Just birthday happiness!</div></div>`,
+ 7:`<div class="center"><h2>Memory Match 🃏</h2><p>Find all four matching pairs.</p>
+ <div class="memory-grid" id="memoryGrid"></div><div class="result" id="memoryResult">Matches: 0 / 4</div>
+ <button class="soft" onclick="initMemory()">Restart game</button></div>`,
+ 8:`<div class="center"><h2>Lucky Wheel 🎡</h2><div class="wheel" id="wheel"></div>
+ <button class="primary" onclick="spinWheel()">SPIN THE WHEEL</button>
+ <div class="result" id="wheelResult">A surprise is waiting for you!</div></div>`,
+ 9:`<div class="center"><h2>Choose a mystery gift</h2><div class="grid">
+ ${["🎀","💝","🌷","⭐"].map((x,n)=>`<div class="tile center" onclick="openGift(${n})"><div class="big">${x}</div><b>Gift ${n+1}</b></div>`).join("")}
+ </div><div class="result" id="giftResult">Choose a box to reveal your gift.</div></div>`,
+ 10:`<div class="center"><h2>The Mystery Door</h2><div class="door" id="door" onclick="openDoor()">🚪</div>
+ <p>Tap the door to discover what is waiting behind it.</p><div class="result" id="doorResult">A surprise is behind this door...</div></div>`,
+ 11:`<div class="center"><h2>Treasure Hunt</h2><p>One chest contains a birthday treasure.</p><div class="grid">
+ ${["📦","🧰","🪵"].map((x,n)=>`<div class="tile center" onclick="chooseTreasure(${n})"><div class="big">${x}</div><b>Chest ${n+1}</b></div>`).join("")}
+ </div><div class="result" id="treasureResult">Choose a chest!</div></div>`,
+ 12:`<div class="center"><h2>Scratch Reveal ✨</h2><div class="scratch" id="scratch" onclick="revealScratch()">SCRATCH TO REVEAL</div>
+ <p>Tap the card to reveal a hidden message.</p></div>`,
+ 13:`<div class="center"><h2>Fireworks in the sky 🎆</h2><p>Let's light up your birthday night!</p>
+ <button class="primary" onclick="launchFireworks()">Launch fireworks ✨</button>
+ <div class="result">This uses a recorded fireworks sound effect. Turn your volume up if you want to hear it.</div></div>`,
+ 14:`<div class="center"><div class="big">🌷</div><h2>Birthday Wishes</h2>
+ <div class="result">May your days be full of sunshine, your dreams full of possibilities, and your heart full of happiness.</div>
+ <div class="result">May you always find reasons to laugh, people who support you and moments worth remembering.</div>
+ <div class="result">May this new chapter be one of your most beautiful ones yet. 💗</div></div>`,
+ 15:`<div class="center"><h2>A few lovely reminders</h2><div class="result" id="complimentResult">You bring your own special sparkle to the world.</div>
+ <button class="primary" onclick="nextCompliment()">Another compliment ✨</button></div>`,
+ 16:`<div class="center"><h2>Secret Notes 📝</h2><textarea class="field" id="noteInput" placeholder="Write a little note..."></textarea>
+ <div><button class="primary" onclick="saveNote()">Save note</button></div><div class="result" id="noteList">Your notes will appear here.</div></div>`,
+ 17:`<div class="center"><h2>Memory Jar 🫙</h2><input class="field" id="jarInput" placeholder="Add a happy thought...">
+ <button class="primary" onclick="addJar()">Put it in the jar</button><div class="big">🫙</div>
+ <div class="result" id="jarList">The jar is waiting for happy memories.</div></div>`,
+ 18:`<div class="center"><h2>A little timeline 📖</h2><p>Add moments to your birthday timeline.</p>
+ <input class="field" id="timelineInput" placeholder="Write a memorable moment...">
+ <button class="primary" onclick="addTimeline()">Add moment</button><div class="result" id="timelineList">Your timeline begins here.</div></div>`,
+ 19:`<div class="center"><h2>Photo Gallery 🖼️</h2><p>Select pictures from your device to display in your gallery.</p>
+ <input class="field" type="file" accept="image/*" multiple onchange="addPhotos(event)">
+ <div class="photo-grid" id="photoGrid"></div></div>`,
+ 20:`<div class="center"><h2>Photo Booth 📸</h2><p>Choose a little frame for your photo moment.</p>
+ <div class="big" id="photoFrame">🌸 📸 🌸</div>
+ <div class="controls"><button class="soft" onclick="changeFrame()">Change frame</button>
+ <button class="primary" onclick="photoCaption()">Add a caption</button></div><div class="result" id="photoResult">A little moment worth remembering.</div></div>`,
+ 21:`<div class="center"><h2>Create a birthday card 💝</h2>
+ <input class="field" id="cardName" placeholder="Write a name or greeting">
+ <textarea class="field" id="cardMessage" placeholder="Your birthday message..."></textarea>
+ <div><button class="primary" onclick="makeCard()">Create my card</button></div>
+ <div class="result" id="cardPreview">Your card preview will appear here.</div></div>`,
+ 22:`<div class="center"><h2>Scrapbook 📔</h2><p>Add little decorations to your scrapbook.</p>
+ <div class="big" id="scrapbookDisplay">📔</div>
+ <div class="controls">${["🌸","💗","🎀","⭐","🦋","🌷"].map(x=>`<button class="soft" onclick="addScrap('${x}')">${x}</button>`).join("")}</div>
+ <div class="result" id="scrapbookList">Your scrapbook is waiting for decorations.</div></div>`,
+ 23:`<div class="center"><h2>Mood Matcher 🌈</h2><p>How are you feeling today?</p>
+ <div class="controls">${["😊 Happy","🌷 Calm","🥳 Excited","😴 Sleepy","💭 Thoughtful"].map(x=>`<button class="soft" onclick="setMood('${x}')">${x}</button>`).join("")}</div>
+ <div class="result" id="moodResult">Choose the mood that feels right.</div></div>`,
+ 24:`<div class="center"><h2>Riddle Room ❓</h2><p>I have hands but cannot clap. What am I?</p>
+ <input class="field" id="riddleAnswer" placeholder="Your answer">
+ <button class="primary" onclick="checkRiddle()">Check answer</button>
+ <div class="result" id="riddleResult">Think carefully!</div></div>`,
+ 25:`<div class="center"><h2>Tic Tac Toe ⭕</h2><p>Take turns with a friend.</p>
+ <div class="tic-grid" id="ticGrid"></div><div class="result" id="ticResult">Player X starts.</div>
+ <button class="soft" onclick="initTic()">Restart game</button></div>`,
+ 26:`<div class="center"><h2>Color Studio 🎨</h2><p>Choose a colour and paint your little canvas.</p>
+ <input type="color" id="paintColor" value="#f28cbd" oninput="paintCanvas()">
+ <canvas id="paintCanvas" width="500" height="180" style="width:100%;max-width:500px;border-radius:17px;background:#fff;margin:15px auto;display:block;border:3px solid white"></canvas>
+ <button class="soft" onclick="clearPaint()">Clear canvas</button></div>`,
+ 27:`<div class="center"><h2>Theme Gallery 🪄</h2><p>Choose a soft colour mood for your page.</p>
+ <div class="controls"><button class="soft" onclick="setTheme('#f28cbd','#a78bfa')">🌸 Rose & lavender</button>
+ <button class="soft" onclick="setTheme('#e8a6ce','#91b9ec')">🦋 Pink & sky</button>
+ <button class="soft" onclick="setTheme('#c39bea','#f1a8d5')">💜 Lilac dream</button></div>
+ <div class="result">Choose your favourite dreamy palette.</div></div>`,
+ 28:`<div class="center"><h2>Birthday Countdown ⏳</h2><p>Choose the date of the celebration.</p>
+ <input class="field" type="datetime-local" id="countDate">
+ <button class="primary" onclick="startCountdown()">Start countdown</button>
+ <div class="result" id="countResult">Your countdown will appear here.</div></div>`,
+ 29:`<div class="center"><h2>Birthday Music 🎵</h2><p>A real birthday song with vocals — not a generated melody.</p>
+ <button class="primary" onclick="toggleMusic()">▶ Play / Pause birthday song</button>
+ <div class="result">The music player will appear in the bottom corner. You can use its YouTube controls.</div>
+ <p><a href="https://www.youtube.com/watch?v=nl62hhiBMOM" target="_blank" rel="noopener">Open the birthday song on YouTube ↗</a></p></div>`,
+ 30:`<div class="center"><h2>Promise Wall 🤝</h2><p>Add a kind promise to the wall.</p>
+ <input class="field" id="promiseInput" placeholder="Write a kind promise...">
+ <button class="primary" onclick="addPromise()">Add to the wall</button>
+ <div class="result" id="promiseList">A wall of lovely promises starts here.</div></div>`,
+ 31:`<div class="center"><h2>Star Wishes ⭐</h2><p>Write a wish and send it to the stars.</p>
+ <input class="field" id="starInput" placeholder="Make a wish...">
+ <button class="primary" onclick="sendStar()">Send my wish ✨</button>
+ <div class="big" id="starDisplay">⭐</div><div class="result" id="starResult">Your star is waiting.</div></div>`,
+ 32:`<div class="center"><h2>Confetti Party 🎊</h2><p>Let's celebrate!</p>
+ <button class="primary" onclick="confettiParty()">Start the party 🎉</button>
+ <div class="result" id="confettiResult">Ready for a little celebration?</div></div>`,
+ 33:`<div class="center"><h2>Teddy Workshop 🧸</h2><p>Choose accessories for your teddy.</p>
+ <div class="big" id="teddy">🧸</div>
+ <div class="controls"><button class="soft" onclick="teddyPart('🎀')">Add ribbon</button>
+ <button class="soft" onclick="teddyPart('🌸')">Add flower</button>
+ <button class="soft" onclick="teddyPart('💗')">Add heart</button>
+ <button class="soft" onclick="teddyPart('✨')">Add sparkle</button>
+ <button class="primary" onclick="finishTeddy()">Finish teddy</button></div>
+ <div class="result" id="teddyResult">Build your own teddy surprise.</div></div>`,
+ 34:`<div class="center"><h2>Flower Garden 🌸</h2><p>Tap the button to grow your garden.</p>
+ <div class="big" id="flowerGarden">🌱</div><button class="primary" onclick="growFlower()">Plant a flower</button>
+ <div class="result" id="flowerResult">Your garden is waiting to bloom.</div></div>`,
+ 35:`<div class="center"><h2>Message Bottle 🍾</h2><p>Leave a little message in a bottle.</p>
+ <textarea class="field" id="bottleInput" placeholder="Write a message..."></textarea>
+ <button class="primary" onclick="sealBottle()">Seal the bottle</button>
+ <div class="big" id="bottle">🍾</div><div class="result" id="bottleResult">Your bottle is waiting for a message.</div></div>`,
+ 36:`<div class="center"><h2>Surprise Room 🌙</h2><div class="big">🌙</div>
+ <p>A quiet little corner filled with warm wishes.</p>
+ <button class="primary" onclick="surpriseRoom()">Open the surprise</button>
+ <div class="result" id="surpriseResult">Something lovely is waiting.</div></div>`,
+ 37:`<div class="center"><h2>Birthday Challenge 🏆</h2><p>Complete all three happy challenges.</p>
+ <div class="controls"><label><input type="checkbox" onchange="challengeUpdate()"> Think of a happy memory</label></div>
+ <div class="controls"><label><input type="checkbox" onchange="challengeUpdate()"> Send someone a kind thought</label></div>
+ <div class="controls"><label><input type="checkbox" onchange="challengeUpdate()"> Make a wish for the year ahead</label></div>
+ <div class="result" id="challengeResult">Challenges completed: 0 / 3</div></div>`,
+ 38:`<div class="center"><h2>Happiness Meter 😊</h2><p>Set the happiness level for today.</p>
+ <input type="range" id="happyRange" min="0" max="100" value="85" oninput="happyValue.textContent=this.value+'% happiness'">
+ <div class="result" id="happyValue">85% happiness</div></div>`,
+ 39:`<div class="center"><div class="big">💖</div><h2>The Final Surprise</h2>
+ <p>Thank you for visiting this little birthday universe.</p>
+ <button class="primary" onclick="finalSurprise()">Open the final surprise ✨</button>
+ <div class="result" id="finalResult">A final birthday wish is waiting for you.</div></div>`
+ };
+ if(i===0)return `<div class="grid" id="homeGrid"></div>`;
+ return pages[i]||`<div class="center"><div class="big">${sections[i][0]}</div><h2>${sections[i][1]}</h2><p>${sections[i][2]}</p><button class="primary" onclick="confettiParty()">Celebrate ✨</button></div>`;
+}
+
+function enterExperience(){showPage(1);toggleMusic();confettiParty()}
+function blowCake(){document.getElementById("cake").classList.add("off");document.getElementById("cakeResult").textContent="The candles are out! May your wish come true. 💗";confettiParty()}
+function releaseLantern(){
+ const w=document.getElementById("wishInput").value.trim()||"A beautiful year filled with happiness";
+ const el=document.getElementById("lanternResult");
+ el.textContent="🏮 "+w+" — your wish is on its way!";
+ el.animate([{transform:"translateY(20px)",opacity:.2},{transform:"translateY(0)",opacity:1}],{duration:900});
+}
+function initBalloons(){
+ balloonScore=0;const box=document.getElementById("balloons");if(!box)return;
+ box.innerHTML="";
+ for(let i=0;i<12;i++){
+  const b=document.createElement("span");b.className="balloon";b.textContent=["🎈","💗","🎈","💜"][i%4];
+  b.onclick=()=>{if(!b.isConnected)return;b.remove();balloonScore++;document.getElementById("balloonResult").textContent="Balloons popped: "+balloonScore+" / 12";if(balloonScore===12)confettiParty()};
+  box.appendChild(b);
+ }
+}
+function catchHeart(){heartScore++;document.getElementById("heartResult").textContent="Hearts caught: "+heartScore;document.getElementById("heartTarget").textContent=["💗","💖","💕","💞"][heartScore%4]}
+function quizAnswer(v){document.getElementById("quizResult").textContent="Wonderful choice! "+v+" makes the birthday sweeter. 💗"}
+function initMemory(){
+ const values=["🌷","🎂","💗","🎀","🌷","🎂","💗","🎀"].sort(()=>Math.random()-.5);
+ const grid=document.getElementById("memoryGrid");if(!grid)return;
+ grid.innerHTML="";matches=0;let opened=[],locked=false,found=new Set();
+ document.getElementById("memoryResult").textContent="Matches: 0 / 4";
+ values.forEach((v,i)=>{
+  const b=document.createElement("button");b.textContent="❔";
+  b.onclick=()=>{
+   if(locked||found.has(i)||opened.includes(i))return;
+   b.textContent=v;opened.push(i);
+   if(opened.length===2){
+    if(values[opened[0]]===values[opened[1]]){
+     opened.forEach(k=>found.add(k));opened=[];matches++;
+     document.getElementById("memoryResult").textContent="Matches: "+matches+" / 4";
+     if(matches===4)document.getElementById("memoryResult").textContent="You found every pair! 🎉";
+    }else{
+     locked=true;setTimeout(()=>{opened.forEach(k=>grid.children[k].textContent="❔");opened=[];locked=false},700);
+    }
+   }
+  };
+  grid.appendChild(b);
+ });
+}
+function spinWheel(){
+ const w=document.getElementById("wheel");w.style.transform=`rotate(${1800+Math.random()*1600}deg)`;
+ document.getElementById("wheelResult").textContent="Spinning...";
+ setTimeout(()=>{document.getElementById("wheelResult").textContent=["A virtual hug 💗","A wish for happiness ⭐","A garden of flowers 🌷","A little surprise 🎁"][Math.floor(Math.random()*4)]},4100);
+}
+function openGift(n){document.getElementById("giftResult").textContent=["You found a box full of smiles! 💗","A little garden of wishes is inside. 🌷","A star just for you! ⭐","A pocket full of sunshine! ☀️"][n];confettiParty()}
+function openDoor(){
+ const d=document.getElementById("door");d.classList.add("open");
+ document.getElementById("doorResult").textContent="Surprise! A new year of adventures and happy memories is waiting for you. ✨";
+ setTimeout(()=>d.classList.remove("open"),1300);
+}
+function chooseTreasure(n){document.getElementById("treasureResult").textContent=n===1?"You found the treasure! A diamond full of birthday wishes. 💎":"Not this chest! There is another one to explore."}
+function revealScratch(){document.getElementById("scratch").textContent="You are one of a kind. Keep shining! 💗";document.getElementById("scratch").style.background="linear-gradient(110deg,#ffcae2,#c9b8ff)";confettiParty()}
+function launchFireworks(){
+ fireworksVisual();
+ const a=document.getElementById("fireAudio");a.currentTime=0;a.volume=.75;
+ a.play().catch(()=>alert("Your browser could not load the fireworks sound. Check your internet connection."));
+}
+function fireworksVisual(){
+ const c=document.getElementById("fireCanvas"),ctx=c.getContext("2d");
+ c.width=innerWidth;c.height=innerHeight;
+ let parts=[];
+ for(let n=0;n<8;n++){
+  let x=Math.random()*c.width,y=Math.random()*c.height*.58;
+  for(let k=0;k<65;k++){let a=Math.random()*Math.PI*2,s=1+Math.random()*5;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:65+Math.random()*25,color:["#ff86c5","#b49bff","#9de5ff","#ffe09d"][n%4]})}
+ }
+ let frame=0;
+ function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.035;p.vx*=.99;p.life--;ctx.globalAlpha=Math.max(0,p.life/80);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,2.3,0,Math.PI*2);ctx.fill()});
+  ctx.globalAlpha=1;parts=parts.filter(p=>p.life>0);
+  if(parts.length&&frame++<140)requestAnimationFrame(draw);else ctx.clearRect(0,0,c.width,c.height);
+ }
+ draw();
+}
+const compliments=["Your presence can brighten an ordinary day. 💗","Your ideas and dreams deserve room to grow. ✨","You have your own special sparkle. 🌷","Your kindness can make a difference. 💜","Keep being curious, brave and wonderfully yourself. 🦋"];
+let complimentIndex=0;
+function nextCompliment(){complimentIndex=(complimentIndex+1)%compliments.length;document.getElementById("complimentResult").textContent=compliments[complimentIndex]}
+function saveNote(){const v=document.getElementById("noteInput").value.trim();if(!v)return;notes.push(v);document.getElementById("noteList").innerHTML=notes.map(x=>"💌 "+safe(x)).join("<br>");document.getElementById("noteInput").value=""}
+function addJar(){const v=document.getElementById("jarInput").value.trim();if(!v)return;jar.push(v);document.getElementById("jarList").innerHTML=jar.map(x=>"🌷 "+safe(x)).join("<br>");document.getElementById("jarInput").value=""}
+function addTimeline(){const v=document.getElementById("timelineInput").value.trim();if(!v)return;timeline.push(v);document.getElementById("timelineList").innerHTML=timeline.map((x,i)=>`${i+1}. ✨ ${safe(x)}`).join("<br>");document.getElementById("timelineInput").value=""}
+function addPhotos(e){
+ const g=document.getElementById("photoGrid");g.innerHTML="";
+ [...e.target.files].forEach(f=>{if(!f.type.startsWith("image/"))return;const u=URL.createObjectURL(f),im=document.createElement("img");im.src=u;im.alt="Selected birthday memory";g.appendChild(im)});
+}
+let frameIndex=0;
+function changeFrame(){const frames=["🌸 📸 🌸","💗 📸 💗","✨ 📸 ✨","🎀 📸 🎀","🦋 📸 🦋"];frameIndex=(frameIndex+1)%frames.length;document.getElementById("photoFrame").textContent=frames[frameIndex]}
+function photoCaption(){document.getElementById("photoResult").textContent="A lovely little moment, saved in your birthday memories. 💗"}
+function makeCard(){
+ const name=document.getElementById("cardName").value.trim()||"Meri Jaaaaan";
+ const msg=document.getElementById("cardMessage").value.trim()||"Wishing you a beautiful birthday full of happiness!";
+ document.getElementById("cardPreview").innerHTML=`💝 <b>Happy Birthday, ${safe(name)}!</b><br>${safe(msg)}<br>🌷✨💗`;
+}
+function addScrap(x){scrapbook.push(x);document.getElementById("scrapbookDisplay").textContent="📔 "+scrapbook.join(" ");document.getElementById("scrapbookList").textContent="Your scrapbook: "+scrapbook.join(" ")}
+function setMood(x){document.getElementById("moodResult").textContent="Today's mood: "+x+" — hope your day is gentle and lovely."}
+function checkRiddle(){const a=document.getElementById("riddleAnswer").value.trim().toLowerCase();document.getElementById("riddleResult").textContent=["clock","a clock"].includes(a)?"Correct! ⏰":"Not quite. Hint: you can look at it to know the time."}
+function initTic(){
+ ticCells=Array(9).fill("");ticTurn="X";ticFinished=false;
+ const g=document.getElementById("ticGrid");if(!g)return;g.innerHTML="";
+ document.getElementById("ticResult").textContent="Player X starts.";
+ ticCells.forEach((_,i)=>{
+  const b=document.createElement("button");
+  b.onclick=()=>{
+   if(ticCells[i]||ticFinished)return;
+   ticCells[i]=ticTurn;b.textContent=ticTurn;
+   const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+   if(wins.some(a=>a.every(k=>ticCells[k]===ticTurn))){ticFinished=true;document.getElementById("ticResult").textContent="Player "+ticTurn+" wins! 🎉"}
+   else if(ticCells.every(Boolean)){ticFinished=true;document.getElementById("ticResult").textContent="It's a draw!"}
+   else{ticTurn=ticTurn==="X"?"O":"X";document.getElementById("ticResult").textContent="Player "+ticTurn+"'s turn."}
+  };
+  g.appendChild(b);
+ });
+}
+function paintCanvas(){
+ const c=document.getElementById("paintCanvas");if(!c)return;
+ const ctx=c.getContext("2d");ctx.fillStyle=document.getElementById("paintColor").value;ctx.fillRect(0,0,c.width,c.height);
+}
+function clearPaint(){const c=document.getElementById("paintCanvas");if(c)c.getContext("2d").clearRect(0,0,c.width,c.height)}
+function setTheme(p,g){document.documentElement.style.setProperty("--pink",p);document.documentElement.style.setProperty("--purple",g)}
+function startCountdown(){const v=document.getElementById("countDate").value;if(!v)return;const target=new Date(v).getTime();if(target<=Date.now()){document.getElementById("countResult").textContent="Choose a future date and time.";return}if(window.countdownTimer)clearInterval(window.countdownTimer);function tick(){let d=target-Date.now();if(d<=0){clearInterval(window.countdownTimer);document.getElementById("countResult").textContent="It's time to celebrate! 🎉";return}let days=Math.floor(d/86400000),hours=Math.floor(d%86400000/3600000),mins=Math.floor(d%3600000/60000),secs=Math.floor(d%60000/1000);document.getElementById("countResult").textContent=`${days} days · ${hours} hours · ${mins} minutes · ${secs} seconds`}tick();window.countdownTimer=setInterval(tick,1000)}
+function updateCountdown(){}
+function toggleMusic(){
+ const dock=document.getElementById("musicDock");
+ if(musicPlaying){dock.innerHTML="";dock.style.display="none";musicPlaying=false;document.getElementById("musicLabel").textContent="Play music";return}
+ dock.style.display="block";
+ dock.innerHTML=`<iframe title="Happy Birthday song with vocals" src="https://www.youtube-nocookie.com/embed/nl62hhiBMOM?autoplay=1&controls=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><button class="soft" onclick="toggleMusic()">Stop music</button>`;
+ musicPlaying=true;document.getElementById("musicLabel").textContent="Stop music";
+}
+function addPromise(){const v=document.getElementById("promiseInput").value.trim();if(!v)return;promises.push(v);document.getElementById("promiseList").innerHTML=promises.map(x=>"🤝 "+safe(x)).join("<br>");document.getElementById("promiseInput").value=""}
+function sendStar(){const v=document.getElementById("starInput").value.trim()||"A happy year ahead";document.getElementById("starDisplay").textContent="🌟";document.getElementById("starResult").textContent="Your wish has been sent to the stars: "+v;confettiParty()}
+function confettiParty(){
+ const symbols=["✦","💗","✧","🌸","🎀"];
+ for(let i=0;i<65;i++){
+  const d=document.createElement("div");d.textContent=symbols[i%symbols.length];
+  d.style.cssText=`position:fixed;z-index:110;left:${Math.random()*100}vw;top:-30px;font-size:${12+Math.random()*17}px;pointer-events:none;transition:transform 2.6s linear,opacity 2.6s`;
+  document.body.appendChild(d);
+  requestAnimationFrame(()=>{d.style.transform=`translate(${Math.random()*160-80}px,${innerHeight+70}px) rotate(${Math.random()*550}deg)`;d.style.opacity=0});
+  setTimeout(()=>d.remove(),2700);
+ }
+}
+let teddyParts=[];
+function teddyPart(x){teddyParts.push(x);document.getElementById("teddy").textContent="🧸"+teddyParts.join("");document.getElementById("teddyResult").textContent="Added "+x+" to your teddy!"}
+function finishTeddy(){document.getElementById("teddyResult").textContent="Your custom teddy is ready! 🧸💗";confettiParty()}
+let flowerCount=0;
+function growFlower(){flowerCount++;const flowers=["🌸","🌷","🌼","🌺","🌻"];document.getElementById("flowerGarden").textContent=flowers.slice(0,Math.min(flowerCount,5)).join(" ");document.getElementById("flowerResult").textContent="Your garden has "+flowerCount+" beautiful flowers!"}
+function sealBottle(){const v=document.getElementById("bottleInput").value.trim();document.getElementById("bottle").textContent="🍾💌";document.getElementById("bottleResult").textContent=v?"Your message is sealed in a bottle: "+v:"Your bottle is ready for a message.";confettiParty()}
+function surpriseRoom(){document.getElementById("surpriseResult").textContent="A little reminder: you deserve kindness, joy, good friends and wonderful adventures. 🌙💗";fireworksVisual()}
+function challengeUpdate(){const n=[...document.querySelectorAll('#content input[type="checkbox"]')].filter(x=>x.checked).length;document.getElementById("challengeResult").textContent="Challenges completed: "+n+" / 3";if(n===3)confettiParty()}
+function finalSurprise(){document.getElementById("finalResult").textContent="Happy Birthday, Meri Jaaaaan! May your days be bright, your dreams be big and your heart be full of happiness. 💖";launchFireworks();confettiParty()}
+function createAmbient(){
+ const box=document.getElementById("ambient");
+ for(let i=0;i<32;i++){
+  const s=document.createElement("span");s.className="floaty";s.textContent=["✦","♡","✧","·","🌸"][i%5];
+  s.style.left=Math.random()*100+"%";s.style.animationDuration=(9+Math.random()*16)+"s";
+  s.style.animationDelay=(-Math.random()*18)+"s";s.style.fontSize=(10+Math.random()*17)+"px";box.appendChild(s);
+ }
+}
+createAmbient();
+showPage(0);
+</script>
+</body>
+</html>
